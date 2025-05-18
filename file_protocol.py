@@ -19,17 +19,25 @@ string
 class FileProtocol:
     def __init__(self):
         self.file = FileInterface()
-    def proses_string(self,string_datamasuk=''):
+
+    def proses_string(self, string_datamasuk=''):
         logging.warning(f"string diproses: {string_datamasuk}")
-        c = shlex.split(string_datamasuk.lower())
         try:
-            c_request = c[0].strip()
-            logging.warning(f"memproses request: {c_request}")
-            params = [x for x in c[1:]]
-            cl = getattr(self.file,c_request)(params)
+            string_datamasuk = string_datamasuk.strip()
+            if string_datamasuk.lower().startswith("upload "):
+                parts = string_datamasuk.split(" ", 2)
+                if len(parts) < 3:
+                    return json.dumps(dict(status='ERROR', data='Format UPLOAD tidak lengkap'))
+                c_request = parts[0]
+                params = [parts[1], parts[2]]
+            else:
+                parts = string_datamasuk.split(" ", 1)
+                c_request = parts[0]
+                params = parts[1].split() if len(parts) > 1 else []
+            cl = getattr(self.file, c_request.lower())(params)
             return json.dumps(cl)
-        except Exception:
-            return json.dumps(dict(status='ERROR',data='request tidak dikenali'))
+        except Exception as e:
+            return json.dumps(dict(status='ERROR', data=str(e)))
 
 if __name__=='__main__':
     #contoh pemakaian

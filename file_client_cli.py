@@ -13,7 +13,7 @@ def send_command(command_str=""):
     logging.warning(f"connecting to {server_address}")
     try:
         logging.warning(f"sending message ")
-        sock.sendall(command_str.encode())
+        sock.sendall((command_str + "\r\n\r\n").encode())
         # Look for the response, waiting until socket is done (no more data)
         data_received="" #empty string
         while True:
@@ -66,7 +66,7 @@ def remote_get(filename=""):
 def remote_upload(filepath=""):
     try:
         with open(filepath, 'rb') as f:
-            encoded_content = base64.b64encode(f.read()).decode()
+            encoded_content = base64.b64encode(f.read()).decode('utf-8').replace('\n', '').replace('\r', '')
         filename = os.path.basename(filepath)
         command_str = f'UPLOAD {filename} {encoded_content}'
         hasil = send_command(command_str)

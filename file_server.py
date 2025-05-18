@@ -15,16 +15,24 @@ class ProcessTheClient(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        while True:
-            data = self.connection.recv(32)
-            if data:
-                d = data.decode()
-                hasil = fp.proses_string(d)
-                hasil=hasil+"\r\n\r\n"
-                self.connection.sendall(hasil.encode())
-            else:
-                break
-        self.connection.close()
+        buffer = ""
+        try:
+            while True:
+                data = self.connection.recv(1024)
+                if not data:
+                    break
+                buffer += data.decode()
+
+                while "\r\n\r\n" in buffer:
+                    command, buffer = buffer.split("\r\n\r\n", 1)
+                    logging.warning(f"string diproses: {command}")
+                    hasil = fp.proses_string(command)
+                    self.connection.sendall((hasil + "\r\n\r\n").encode())
+
+        except Exception as e:
+            logging.warning(f"Thread error: {str(e)}")
+        finally:
+            self.connection.close()
 
 class Server(threading.Thread):
     def __init__(self,ipaddress='0.0.0.0',port=8889):
