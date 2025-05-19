@@ -5,7 +5,7 @@ import logging
 import time
 import sys
 
-from file_protocol import FileProtocol
+from file_protocol import  FileProtocol
 fp = FileProtocol()
 
 class ProcessTheClient(threading.Thread):
@@ -25,10 +25,7 @@ class ProcessTheClient(threading.Thread):
 
                 while "\r\n\r\n" in buffer:
                     command, buffer = buffer.split("\r\n\r\n", 1)
-                    command = command.strip()
-                    if command == "":
-                        continue  # abaikan command kosong
-                    logging.warning(f"[Thread {threading.get_ident()}] string diproses: {command}")
+                    logging.warning(f"string diproses: {command}")
                     hasil = fp.proses_string(command)
                     self.connection.sendall((hasil + "\r\n\r\n").encode())
 
@@ -38,8 +35,8 @@ class ProcessTheClient(threading.Thread):
             self.connection.close()
 
 class Server(threading.Thread):
-    def __init__(self, ipaddress='0.0.0.0', port=6667):
-        self.ipinfo = (ipaddress, port)
+    def __init__(self,ipaddress='0.0.0.0',port=8889):
+        self.ipinfo=(ipaddress,port)
         self.the_clients = []
         self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -58,7 +55,7 @@ class Server(threading.Thread):
             self.the_clients.append(clt)
 
 def main():
-    svr = Server(ipaddress='0.0.0.0', port=6667)
+    svr = Server(ipaddress='0.0.0.0',port=6667)
     svr.start()
 
 if __name__ == "__main__":

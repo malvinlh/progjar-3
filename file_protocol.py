@@ -21,7 +21,6 @@ class FileProtocol:
         self.file = FileInterface()
 
     def proses_string(self, string_datamasuk=''):
-        logging.warning(f"string diproses: {string_datamasuk}")
         try:
             string_datamasuk = string_datamasuk.strip()
             if string_datamasuk.lower().startswith("upload "):
