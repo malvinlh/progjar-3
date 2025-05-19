@@ -1,7 +1,7 @@
 # progjar-3
 Tugas 3 Pemrograman Jaringan (D) 2025 mengimplementasikan sistem **file server dan client berbasis TCP socket** menggunakan Python. Sistem ini mendukung operasi dasar seperti **menampilkan daftar file, mengambil file, mengunggah file, dan menghapus file** dari server. Komunikasi antara client dan server dilakukan menggunakan protokol teks sederhana dan respons dalam format JSON.
 
----
+
 
 ## Fitur
 
@@ -12,16 +12,16 @@ Tugas 3 Pemrograman Jaringan (D) 2025 mengimplementasikan sistem **file server d
 
 Semua komunikasi diakhiri dengan delimiter `\r\n\r\n` untuk memisahkan perintah dan respon.
 
----
+
 
 ## Cara Menjalankan
 
-### 1. Jalankan server
+### 1. Jalankan Server
 ```bash
 python3 file_server.py
 ```
 
-### 2. Jalankan server
+### 2. Jalankan Client
 ```bash
 python3 file_client_cli.py
 ```
