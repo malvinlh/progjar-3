@@ -63,3 +63,5 @@ DELETE
 - GAGAL:
   - status: ERROR
   - data: pesan kesalahan
+
+Untuk fitur UPLOAD, client wajib mengirim isi file dalam bentuk string yang telah dienkode terlebih dahulu menggunakan format base64 agar data dapat ditransmisikan dengan aman melalui jaringan sebagai teks. Server kemudian akan mendekode string base64 ini sebelum menyimpannya ke dalam sistem file. Sementara itu, pada fitur DELETE, client cukup mengirimkan nama file yang ingin dihapus, dan server akan menghapus file tersebut dari penyimpanan jika ditemukan. Kedua perintah ini mengikuti format UPLOAD nama_file isi_base64 dan DELETE nama_file, serta memberikan respons dalam bentuk JSON yang menunjukkan status keberhasilan atau kegagalan operasi.
