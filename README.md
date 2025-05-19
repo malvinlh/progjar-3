@@ -5,10 +5,10 @@ Tugas 3 Pemrograman Jaringan (D) 2025 mengimplementasikan sistem **file server d
 
 ## Fitur
 
-✅ `LIST` — Menampilkan daftar file di server  
-✅ `GET <filename>` — Mengunduh file dari server  
-✅ `UPLOAD <filename> <base64_content>` — Mengunggah file ke server  
-✅ `DELETE <filename>` — Menghapus file dari server  
+- `LIST` — Menampilkan daftar file di server  
+- `GET <filename>` — Mengunduh file dari server  
+- `UPLOAD <filename> <base64_content>` — Mengunggah file ke server  
+- `DELETE <filename>` — Menghapus file dari server  
 
 Semua komunikasi diakhiri dengan delimiter `\r\n\r\n` untuk memisahkan perintah dan respon.
 
@@ -25,3 +25,5 @@ python3 file_server.py
 ```bash
 python3 file_client_cli.py
 ```
+
+Jalankan Server dan Client di dua mesin yang berbeda.
