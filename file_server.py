@@ -25,7 +25,6 @@ class ProcessTheClient(threading.Thread):
 
                 while "\r\n\r\n" in buffer:
                     command, buffer = buffer.split("\r\n\r\n", 1)
-                    logging.warning(f"string diproses: {command}")
                     hasil = fp.proses_string(command)
                     self.connection.sendall((hasil + "\r\n\r\n").encode())
 

@@ -21,8 +21,19 @@ class FileProtocol:
         self.file = FileInterface()
 
     def proses_string(self, string_datamasuk=''):
+        string_datamasuk = string_datamasuk.strip()
+        
+        # Logging tanpa mencetak base64
+        if string_datamasuk.lower().startswith("upload "):
+            parts = string_datamasuk.split(" ", 2)
+            if len(parts) >= 2:
+                logging.warning(f"[FileProtocol] string diproses: UPLOAD {parts[1]}")
+            else:
+                logging.warning("[FileProtocol] string diproses: UPLOAD [format tidak lengkap]")
+        else:
+            logging.warning(f"[FileProtocol] string diproses: {string_datamasuk}")
+        
         try:
-            string_datamasuk = string_datamasuk.strip()
             if string_datamasuk.lower().startswith("upload "):
                 parts = string_datamasuk.split(" ", 2)
                 if len(parts) < 3:
@@ -38,8 +49,8 @@ class FileProtocol:
         except Exception as e:
             return json.dumps(dict(status='ERROR', data=str(e)))
 
-if __name__=='__main__':
-    #contoh pemakaian
+if __name__ == '__main__':
+    # contoh pemakaian
     fp = FileProtocol()
     print(fp.proses_string("LIST"))
     print(fp.proses_string("GET pokijan.jpg"))
